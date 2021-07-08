@@ -18,6 +18,7 @@ class Command(BaseCommand):
             self.stdout.write('Аргумент -c/--code не может быть None или пустой строкой!')
             return
 
+        # получаем None или название группы
         group = get_group(code)
         if group:
             self.stdout.write('код существует группа = {%s}' % group)

@@ -68,13 +68,35 @@ def save_json(data):
             'codes': unique_codes
         }
 
-        # добавляет новые промокоды в конец файла
+        # проверяем есть ли название группы в файле json
+        flag = True
         try:
-            with open(DEFAULT_PROMOCODE_DIR, "a") as file:
-                file.seek(file.truncate(file.tell() - 2))
-                file.write(", " + json.dumps(unique_data, ensure_ascii=False) + "]}")
+
+            for i in range(len(file_data['data'])):
+                # если название группы есть файле - добавляем промокоды к уже существующей группе
+                if file_data['data'][i]['group'] == group:
+                    file_data['data'][i]['codes'].extend(unique_codes)
+                    flag = False
+                    break
+
+            with open(DEFAULT_PROMOCODE_DIR, "w") as file:
+                json.dump(
+                    {"data": file_data['data']},
+                    file,
+                    ensure_ascii=False
+                )
+
         except Exception as exc:
             print(f'Error with code: {exc}')
+
+        if flag:
+            # добавляет новые промокоды в конец файла, если одинаковых групп не найдено
+            try:
+                with open(DEFAULT_PROMOCODE_DIR, "a") as file:
+                    file.seek(file.truncate(file.tell() - 2))
+                    file.write(", " + json.dumps(unique_data, ensure_ascii=False) + "]}")
+            except Exception as exc:
+                print(f'Error with code: {exc}')
 
     # если получаем ошибку при открытии - то создаем новый файл и сохраняем туда промокоды
     except (FileNotFoundError, JSONDecodeError):
