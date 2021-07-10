@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from promocode.settings import DEFAULT_PROMOCODE_DIR
+from promocode.settings import DEFAULT_PROMOCODE_PATH
 
 from get_code.utils import get_group
 

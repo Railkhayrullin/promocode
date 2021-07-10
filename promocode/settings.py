@@ -127,5 +127,6 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Параметры настроек генерации промокодов
-DEFAULT_PROMOCODE_DIR = os.path.join(BASE_DIR, 'promo_codes.json')
+DEFAULT_PROMOCODE_PATH = os.path.join(BASE_DIR, 'promo_codes.json')
 DEFAULT_AMOUNT = 10
+DEFAULT_PROMOCODE_LENGTH = 8
